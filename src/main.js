@@ -1,7 +1,12 @@
 import Vue from 'vue';
+import axios from 'axios';
 import App from './App';
+import './mock';
+import { post } from './utils/requestMethod';
 
 Vue.config.productionTip = false;
+Vue.prototype.$http = axios;
+Vue.prototype.$post = post;
 App.mpType = 'app';
 
 const app = new Vue(App);

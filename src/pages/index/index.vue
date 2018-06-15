@@ -7,7 +7,11 @@
         <card :text="userInfo.nickName"></card>
       </div>
     </div>
-
+    <ul>
+      <li v-for="(item, index) in list" :key="index">
+      T.{{item.title}}
+    </li>
+    </ul>
     <div class="usermotto">
       <div class="user-motto">
         <card :text="motto"></card>
@@ -30,6 +34,8 @@
       return {
         motto: 'Hello World',
         userInfo: {},
+        siteInfo: {},
+        list: [],
       };
     },
 
@@ -57,11 +63,37 @@
       clickHandle(msg, ev) {
         console.log('clickHandle:', msg, ev);
       },
+      setNewsApi() {
+        const that = this;
+        that.$post('site/home', { type: 'top', key: '12445' }).then((res) => {
+          that.siteInfo = res.data;
+          that.list = this.siteInfo.list;
+        }).catch(() => {
+          console.error('网络请求失败');
+        });
+
+        // wx.request({
+        //   url: 'http://student.qiuxue001.com/api/site/home',
+        //   header: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   method: 'POST',
+        //   // data: { cityname: "上海", key: "1430ec127e097e1113259c5e1be1ba70" },
+        //   data: { type: 'top', key: '12445' },
+        //   complete: (res) => {
+        //     that.newListShow = res.data;
+        //     if (res == null || res.data == null) {
+        //       console.error('网络请求失败');
+        //     }
+        //   },
+        // });
+      },
     },
 
     created() {
       // 调用应用实例的方法获取全局数据
       this.getUserInfo();
+      this.setNewsApi();
     },
   };
 </script>
