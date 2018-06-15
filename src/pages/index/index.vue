@@ -64,6 +64,7 @@
         console.log('clickHandle:', msg, ev);
       },
       setNewsApi() {
+        // 请求方法1：promise模式
         const that = this;
         that.$post('site/home', { type: 'top', key: '12445' }).then((res) => {
           that.siteInfo = res.data;
@@ -71,7 +72,7 @@
         }).catch(() => {
           console.error('网络请求失败');
         });
-
+        // 请求方法2：微信wx.request
         // wx.request({
         //   url: 'http://student.qiuxue001.com/api/site/home',
         //   header: {
